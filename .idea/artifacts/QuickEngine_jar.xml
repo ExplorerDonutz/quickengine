@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="QuickEngine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/QuickEngine_jar</output-path>
+    <root id="archive" name="QuickEngine.jar">
+      <element id="module-output" name="QuickEngine" />
+    </root>
+  </artifact>
+</component>
