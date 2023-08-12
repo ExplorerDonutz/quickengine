@@ -1,28 +1,26 @@
 import ca.michaelquick.quickengine.Game;
 import ca.michaelquick.quickengine.drawing.Animation;
+import ca.michaelquick.quickengine.utils.Utils;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Test extends Game {
     Animation anim;
+    Animation anim2;
     public Test() {
         super(400, 400, "Test");
 
-        BufferedImage img;
-        try {
-            img = ImageIO.read(new File("src/testsprite.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        setBackgroundColour(Color.CYAN);
 
-        anim = new Animation(img, 64, 64, 1);
-        anim.setLoop(false);
+        BufferedImage img, img2;
+            img = Utils.loadImage("testsprite.png");
+            img2 = Utils.loadImage("paddedtest.png");
 
+        anim = new Animation(img, 64, 64, 0, 0,  false,1);
+        anim.setLoop(true);
 
+        anim2 = new Animation(img2, 14, 14, 0, 0, 2, 2, false, 1);
 
         start();
     }
@@ -32,6 +30,7 @@ public class Test extends Game {
         super.draw(g);
 
         anim.draw(g, 100, 100);
+        anim2.draw(g, 150, 100);
 
         g.draw(new Rectangle(10, 10, 10, 10));
     }
