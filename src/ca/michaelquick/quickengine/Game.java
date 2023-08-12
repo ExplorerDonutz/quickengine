@@ -30,12 +30,14 @@ public class Game implements Runnable {
     private Screen screen;
 
     protected final InputListener inputListener;
+    private Color backgroundColour;
 
     // Constructors
 
     public Game(int width, int height, String title) {
         inputListener = new InputListener();
         this.display = new Display(width, height, title, inputListener);
+        backgroundColour = Color.BLACK;
     }
 
     public Game(int width, int height) {
@@ -69,7 +71,7 @@ public class Game implements Runnable {
      * Renders the game
      */
     public void render() {
-        if (!display.preRender())
+        if (!display.preRender(backgroundColour))
             return;
 
         Graphics2D g = display.getEmptyGraphics();
@@ -156,28 +158,6 @@ public class Game implements Runnable {
         }
     }
 
-    public BufferedImage loadImage(URL file) {
-        try {
-            return ImageIO.read(file);
-        } catch(IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Clip loadSound(URL file) {
-        try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
-            Clip in = AudioSystem.getClip();
-            in.open(audioIn);
-            return in;
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     public void setScreen(Screen screen) {
         this.screen = screen;
     }
@@ -216,4 +196,7 @@ public class Game implements Runnable {
         }
     }
 
+    public void setBackgroundColour(Color colour) {
+        backgroundColour = colour;
+    }
 }

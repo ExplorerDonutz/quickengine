@@ -53,13 +53,13 @@ public class Display implements WindowListener {
         offscreenGraphics = offscreenBuffer.createGraphics();
     }
 
-    public boolean preRender() {
+    public boolean preRender(Color backgroundColour) {
         if (bs == null) {
             return false;
         }
 
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
+        g.setColor(backgroundColour);
         g.fillRect(0, 0, width, height);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
