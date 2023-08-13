@@ -41,6 +41,7 @@ public class Display implements WindowListener {
         canvas.setPreferredSize(d);
         canvas.setMaximumSize(d);
         canvas.addKeyListener(inputListener);
+        canvas.addMouseListener(inputListener);
 
         frame.add(canvas);
         frame.pack();
