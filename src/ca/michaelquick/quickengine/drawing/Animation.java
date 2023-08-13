@@ -3,7 +3,8 @@ package ca.michaelquick.quickengine.drawing;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**@author Michael Quick
+/**
+ * @author Michael Quick
  * @version 1.0, 2023/08/11
  * Animations that can be drawn and played at different speeds
  */
@@ -69,6 +70,7 @@ public class Animation {
 
     /**
      * Creates an animation using a specified section of the given spritesheet image
+     *
      * @param spriteSheet the image that is to be cut into animation frames
      * @param frameWidth  the width of an individual frame
      * @param frameHeight the height of an individual frame
@@ -121,6 +123,7 @@ public class Animation {
 
     /**
      * Draws the current frame of the animation and switches to the next frame if the frameTime has past
+     *
      * @param g the graphics object to draw onto
      * @param x the x coordinate of the animation
      * @param y the y coordinate of the animation
@@ -142,7 +145,33 @@ public class Animation {
     }
 
     /**
+     * Draws the current frame of the animation and switches to the next frame if the frameTime has past
+     *
+     * @param g      the graphics object to draw onto
+     * @param x      the x coordinate of the animation
+     * @param y      the y coordinate of the animation
+     * @param scaleX the scaling value of the width
+     * @param scaleY the scaling value of the height
+     */
+    public void draw(Graphics2D g, int x, int y, float scaleX, float scaleY) {
+        g.drawImage(frames[currentFrame], x, y, (int) (frames[currentFrame].getWidth() * scaleX), (int) (frames[currentFrame].getHeight() * scaleY), null);
+
+        long currentTime = System.nanoTime();
+        long elapsedTime = currentTime - timeThen;
+        double seconds = elapsedTime / 1e9; // Convert nanoseconds to seconds
+
+        if (seconds >= frameTime) {
+            if (currentFrame == frames.length - 1 && looping)
+                currentFrame = 0;
+            else if (currentFrame < frames.length - 1)
+                currentFrame++;
+            timeThen = currentTime;
+        }
+    }
+
+    /**
      * Sets whether the animation should loop or nit
+     *
      * @param looping sets the animation to loop if true and not to loop if false
      */
     public void setLoop(boolean looping) {
