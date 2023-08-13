@@ -1,16 +1,14 @@
 package ca.michaelquick.quickengine;
 
+import ca.michaelquick.quickengine.audio.AudioManager;
 import ca.michaelquick.quickengine.io.InputListener;
 import ca.michaelquick.quickengine.screens.Screen;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -29,15 +27,17 @@ public class Game implements Runnable {
     private boolean running = false;
     private Screen screen;
 
-    protected final InputListener inputListener;
+    protected final InputListener input;
+    protected final AudioManager audioManager;
     private Color backgroundColour;
 
     // Constructors
 
     public Game(int width, int height, String title) {
-        inputListener = new InputListener();
-        this.display = new Display(width, height, title, inputListener);
+        input = new InputListener();
+        this.display = new Display(width, height, title, input);
         backgroundColour = Color.BLACK;
+        audioManager = new AudioManager();
     }
 
     public Game(int width, int height) {
@@ -151,6 +151,8 @@ public class Game implements Runnable {
 
         running = false;
 
+        audioManager.stop();
+
         try {
             thread.join();
         } catch (InterruptedException e) {
@@ -162,12 +164,8 @@ public class Game implements Runnable {
         this.screen = screen;
     }
 
-    public boolean isKeyDown(int key) {
-        return inputListener.isKeyDown(key);
-    }
-
     public Set<Integer> getKeyDown() {
-        return inputListener.getKeysDown();
+        return input.getKeysDown();
     }
 
     public boolean isRunning() {
